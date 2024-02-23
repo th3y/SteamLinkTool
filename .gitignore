@@ -1,0 +1,7 @@
+
+*.exe
+*.pdb
+*.cache
+obj/Release/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+obj/Release/SteamLinkTool.csproj.FileListAbsolute.txt
+bin/Release/SteamLinkTool.exe.config
