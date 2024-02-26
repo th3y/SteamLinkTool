@@ -36,7 +36,6 @@ namespace SteamLauncher
             string timeoutstr = iniFile.GetValue("TimeOutSeconds").Trim();
 
             bool bUsingPathIni = false;
-
             
             if (args.Length == 1)
             {
@@ -52,6 +51,16 @@ namespace SteamLauncher
                 bUsingPathIni = true;
                 ExeLinkArgs.url = filepath;
                 ExeLinkArgs.exeName = Path.GetFileNameWithoutExtension(filepath);
+
+                // In case im running an epic games launcher + Remote Play
+                if (filepath.Contains("com.epicgames.launcher:"))
+                {
+                    Console.WriteLine($"Running from epic {filepath}");
+                    string[] array = filepath.Split(' ');
+                    ExeLinkArgs.url = array[0];
+                    ExeLinkArgs.exeName = array[1];
+                    bUsingPathIni = false;
+                }
             }
             else
             {
@@ -102,6 +111,7 @@ namespace SteamLauncher
 
             if (bUsingPathIni)
             {
+
                 // Execute Application
                 var ps = new ProcessStartInfo(ExeLinkArgs.url)
                 {
@@ -146,6 +156,7 @@ namespace SteamLauncher
                 //}
 
                 Thread.Sleep(500);
+
                 Environment.Exit(Environment.ExitCode);
             }
             else
